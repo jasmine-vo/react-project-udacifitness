@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Platform, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
@@ -7,6 +8,7 @@ import { fetchCalendarResults } from '../utils/api'
 import UdaciFitnessCalendar from 'udacifitness-calendar'
 import { white } from '../utils/colors'
 import DateHeader from './DateHeader'
+import MetricCard from './MetricCard'
 
 class History extends Component {
   componentDidMount () {
@@ -35,7 +37,7 @@ class History extends Component {
         : <TouchableOpacity
             onPress={() => console.log('Pressed!')}
           >
-              <Text>{JSON.stringify(metrics)}</Text>
+            <MetricCard date={formattedDate} metrics={metrics} />
           </TouchableOpacity>}
     </View>
   )
