@@ -1,11 +1,5 @@
 import React, { Component } from 'react'
-import {
- View,
- TouchableOpacity,
- Text,
- StyleSheet,
- Platform
-} from 'react-native'
+import { View, TouchableOpacity, Text, StyleSheet, Platform } from 'react-native'
 import {
   getMetricMetaInfo,
   timeToString,
@@ -20,11 +14,12 @@ import { submitEntry, removeEntry } from '../utils/api'
 import { connect } from 'react-redux'
 import { addEntry } from '../actions'
 import { purple, white } from '../utils/colors'
+import { NavigationActions } from 'react-navigation'
 
 function SubmitBtn ({ onPress }) {
   return (
     <TouchableOpacity
-      style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn}
+      style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn}
       onPress={onPress}>
         <Text style={styles.submitBtnText}>SUBMIT</Text>
     </TouchableOpacity>
@@ -75,8 +70,9 @@ class AddEntry extends Component {
 
     this.setState(() => ({ run: 0, bike: 0, swim: 0, sleep: 0, eat: 0 }))
 
-    submitEntry({ key, entry })
+    this.toHome()
 
+    submitEntry({ key, entry })
   }
   reset = () => {
     const key = timeToString()
@@ -85,7 +81,12 @@ class AddEntry extends Component {
       [key]: getDailyReminderValue()
     }))
 
+    this.toHome()
+
     removeEntry(key)
+  }
+  toHome = () => {
+    this.props.navigation.dispatch(NavigationActions.back({key: 'AddEntry'}))
   }
   render() {
     const metaInfo = getMetricMetaInfo()
@@ -155,7 +156,7 @@ const styles = StyleSheet.create({
     marginLeft: 40,
     marginRight: 40,
   },
-  androidSubmitBtn: {
+  AndroidSubmitBtn: {
     backgroundColor: purple,
     padding: 10,
     paddingLeft: 30,
