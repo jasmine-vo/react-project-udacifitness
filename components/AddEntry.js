@@ -3,7 +3,9 @@ import { View, TouchableOpacity, Text, StyleSheet, Platform } from 'react-native
 import {
   getMetricMetaInfo,
   timeToString,
-  getDailyReminderValue
+  getDailyReminderValue,
+  clearLocalNotification,
+  setLocalNotification
 } from '../utils/helpers'
 import UdaciSlider from './UdaciSlider'
 import UdaciSteppers from './UdaciSteppers'
@@ -73,6 +75,9 @@ class AddEntry extends Component {
     this.toHome()
 
     submitEntry({ key, entry })
+
+    clearLocalNotification()
+      .then(setLocalNotification)
   }
   reset = () => {
     const key = timeToString()
